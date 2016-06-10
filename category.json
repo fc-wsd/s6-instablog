@@ -1,0 +1,12 @@
+[
+    {
+        "model" : "blog.Category",
+        "pk" : 1,
+        "fields": {
+            "name": "전체보기",
+            "priority" : 1,
+            "status" : "opn",
+            "hierarchy" : "0001"
+        }
+    }
+]
