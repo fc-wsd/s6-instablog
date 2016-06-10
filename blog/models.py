@@ -13,7 +13,7 @@ class Post(models.Model):
     # 공개글 비공개글 설정,
     # 추후 이웃 공개 기능 등이 들어갈 수 있으므로 boolean 이 아닌 enum으로 처리
     status = models.CharField(max_length=20, choices=_status)
-    category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField('Tag', blank=True)
 
     def __str__(self):
