@@ -44,3 +44,11 @@ class Category(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(self.pk, self.title)
+
+
+class Tag(models.Model):
+    title = models.CharField(max_length=40)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}: {}'.format(self.pk, self.title)
