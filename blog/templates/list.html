@@ -4,8 +4,8 @@
     
     <h1>블로그 게시물 목록</h1>
 
-    {% for post in posts %}
-        {% include 'part_detail.html' %}
+    {% for item in posts %}
+        {% include 'part_detail.html' with post=item %}
     {% empty %}
     <p>게시물이 없습니다.</p>
     {% endfor %}
