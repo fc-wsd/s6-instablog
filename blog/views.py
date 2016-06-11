@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
 
 
 from .models import Post
@@ -7,25 +10,20 @@ from .models import Post
 
 def list_posts(request):
     per_page = 2
-    # if 'page' in request.GET:
-    #     page = request.GET['page']
-    # else:
-    #     page = 1
     page = request.GET.get('page', 1)
-    try:
-        page = int(page)
-    except ValueError:
-        return redirect('blog:list')
-        # page = 1
-
-    page = page if page >= 1 else 1
-
     posts = Post.objects.all()
-    posts = posts[(page-1)*per_page:page*per_page]
 
+    pg = Paginator(posts, per_page)
+
+    try:
+        contents = pg.page(page)
+    except PageNotAnInteger:
+        contents = pg.page(1)
+    except EmptyPage:
+        contents = []
 
     ctx = {
-        'object_list': posts,
+        'posts': contents,
     }
 
     return render(request, 'list.html', ctx)
@@ -39,6 +37,10 @@ def detail_post(request, pk):
     }
     return render(request, 'detail.html', ctx)
 
+
+def create_post(request):
+    ctx = {}
+    return render(request, 'edit.html', ctx)
 
 
 
