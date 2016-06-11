@@ -1,6 +1,10 @@
 <br/>
 <div class="post_container">
-    <h3 class="post_title">{{ post.title }}</h3>
+    <h3 class="post_title"><a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a></h3>
+        <!-- blog는 app name, detail은 urls.py에서 지정한 name -->
+        <!--
+        url 'blog:detail' pk=post.pk
+        -->
 
     <div class="post_content">
         {{ post.content }}

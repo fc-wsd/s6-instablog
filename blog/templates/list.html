@@ -6,13 +6,9 @@
 
 {% block body %}
 <h1>블로그 목록</h1>
-{% for post in object_list %}
+{% for item in object_list %}
     <div class="post_container">
-        <h3 class="post_title"><a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a></h3>
-        <!-- blog는 app name, detail은 urls.py에서 지정한 name -->
-        <!--
-        url 'blog:detail' pk=post.pk
-        -->
+        {% include 'part_detail.html' with post=item %}
     </div>
 {% empty %}
     <p>글이 없습니다.</p>
