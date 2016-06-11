@@ -1,24 +1,11 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>게시물 보기</title>
-</head>
-<body>
-<br/>
-<div class="post_container">
-    <h3 class="post_title">{{ post.title }}</h3>
+{% extends 'layout.html' %}
 
-    <div class="post_content">
-        {{ post.content }}
-    </div>
-    <br/><br/>
-    <div>
-        <p><span>글 갈래 : </span>{{ post.category.name }}</p>
-        <p><span>작성일시 : </span>{{ post.created_at }}</p>
-    </div>
+{% block page_title %}
+{{ post.title }} - 게시물 보기
+{% endblock %}
 
+{% block body %}
+    {% include 'part_detail.html' %}
     <br/><br/>
     <a href="{% url 'blog:list' %}">글 목록</a>
-</div>
-</body>
-</html>
+{% endblock %}

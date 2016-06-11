@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block page_title %}
+게시물 쓰기
+{% endblock %}
+
+{% block body %}
+<form method="POST" action="">
+    {%  csrf_token %}
+    <p>
+        <label for="">글 제목</label>
+        <input type="text" name="title" id="id_title" value=""/>
+    </p>
+    <br/>
+    <p>
+        <label for="">글 본문</label>
+        <textarea name="content"></textarea>
+    </p>
+    <p>
+        <button type="submit">저 장</button>
+    </p>
+</form>
+{% endblock %}

@@ -11,7 +11,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
-    category = models.ForeignKey('Category')
+    category = models.ForeignKey('Category', blank=True)
     status = models.CharField(max_length=20, choices=_status,)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

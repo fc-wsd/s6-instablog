@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>게시물 목록</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+
+{% block page_title %}
+게시물 목록
+{% endblock %}
+
+{% block body %}
 <h1>블로그 목록</h1>
 {% for post in object_list %}
     <div class="post_container">
-        <h3 class="post_title"><a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a></h3>
+        <h3 class="post_title"><a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a></h3>
         <!-- blog는 app name, detail은 urls.py에서 지정한 name -->
         <!--
         url 'blog:detail' pk=post.pk
@@ -16,5 +17,18 @@
 {% empty %}
     <p>글이 없습니다.</p>
 {% endfor %}
-</body>
-</html>
+<br/>
+{% if object_list.has_previous %}
+    <a href="?page={{ object_list.previous_page_number }}">Prev</a>
+{% endif %}
+
+{{ object_list.number }} / {{ object_list.paginator.num_pages }}
+
+{% if object_list.has_next %}
+    <a href="?page={{ object_list.next_page_number }}">Next</a>
+{% endif %}
+<br/>
+<p>
+    <a href="{% url 'blog:create' %}">새 글 쓰기</a>
+</p>
+{% endblock %}
