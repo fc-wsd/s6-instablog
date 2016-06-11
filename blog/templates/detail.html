@@ -16,6 +16,9 @@
         <p><span>글 갈래 : </span>{{ post.category.name }}</p>
         <p><span>작성일시 : </span>{{ post.created_at }}</p>
     </div>
+
+    <br/><br/>
+    <a href="{% url 'blog:list' %}">글 목록</a>
 </div>
 </body>
 </html>
