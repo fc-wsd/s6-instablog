@@ -40,6 +40,7 @@ def detail_post(request, pk):
 
 
 def create_post(request):
+    ctx = {}
     if request.method == 'GET':
         return render(request, 'edit.html', ctx)
     elif request.method == 'POST':
@@ -54,7 +55,6 @@ def create_post(request):
         url = reverse('blog:detail', kwargs={'pk': new_post.pk})
         return redirect(url)
 
-    ctx = {}
     return render(request, 'edit.html', ctx)
 
 
