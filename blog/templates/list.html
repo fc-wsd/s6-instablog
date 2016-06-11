@@ -9,7 +9,9 @@
     <h1>블로그 게시물 목록</h1>
 
     {% for post in object_list %}
-    <p>{{ post.title }}</p>
+    <p><a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a></p>
+    {% empty %}
+    <p>게시물이 없습니다.</p>
     {% endfor %}
 
 </body>
