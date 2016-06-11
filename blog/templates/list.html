@@ -1,4 +1,6 @@
+
 {% extends 'layout.html' %}
+{%  load bootstrap3 %}
 
 {% block page_title %}
 게시물 목록
@@ -14,6 +16,9 @@
     <p>글이 없습니다.</p>
 {% endfor %}
 <br/>
+
+    {% bootstrap_pagination object_list %}
+{% comment %}
 {% if object_list.has_previous %}
     <a href="?page={{ object_list.previous_page_number }}">Prev</a>
 {% endif %}
@@ -23,6 +28,7 @@
 {% if object_list.has_next %}
     <a href="?page={{ object_list.next_page_number }}">Next</a>
 {% endif %}
+{% endcomment %}
 <br/>
 <p>
     <a href="{% url 'blog:create' %}">새 글 쓰기</a>
