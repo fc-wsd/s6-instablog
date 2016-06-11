@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Post(models.Model):
+    """게시물을 다루는 모델
+    """
     _status = (
         ('opn', 'Opened', ),
         ('clsd', 'Closed', ),
