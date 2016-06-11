@@ -7,6 +7,7 @@
 <body>
 
     <form method="POST" action="">
+        {% csrf_token %}
         <p>
         <label for="id_title">글 제목</label>
         <input type="text" name="title" id="id_title" value="" />
@@ -14,6 +15,10 @@
 
         <p>
         <textarea name="content"></textarea>
+        </p>
+
+        <p>
+        <button type="submit">저장</button>
         </p>
     </form>
 
