@@ -18,6 +18,9 @@ class Post(models.Model):
     def __str__(self):
         return '{}: {}'.format(self.pk, self.title)
 
+    def get_absolute_url(self):
+        return '/blog/posts/{}/'.format(self.pk)
+
     class Meta:
         ordering = ['-created_at', '-pk']
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>게시물 목록</title>
+</head>
+
+<body>
+    
+    <h1>블로그 게시물 목록</h1>
+
+    {% for post in object_list %}
+    <p>{{ post.title }}</p>
+    {% endfor %}
+
+</body>
+
+</html>
