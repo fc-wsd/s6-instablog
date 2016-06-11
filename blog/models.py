@@ -16,7 +16,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{}: {}'.format(self.pk, self.title)
+        return self.title
 
     def get_absolute_url(self):
         return '/blog/posts/{}/'.format(self.pk)
