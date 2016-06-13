@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 
 from .models import Post
+from .models import Comment
 
 
 def list_posts(request):
@@ -32,9 +33,10 @@ def list_posts(request):
 
 def detail_post(request, pk):
     post = Post.objects.get(pk=pk)
-
+    comments=post.comment_set.all()
     ctx = {
         'post': post,
+        'comments' : comments
     }
     return render(request, 'detail.html', ctx)
 
@@ -57,6 +59,17 @@ def create_post(request):
 
     return render(request, 'edit.html', ctx)
 
+def create_comment(request,pk):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        content = request.POST.get('content')
 
+        new_comment = Comment()
+        new_comment.post = post
+        new_comment.content = content
+        new_comment.save()
 
+        url = reverse('blog:detail', kwargs={'pk': post.pk})
+        return redirect(url)
 
+def delete_comment(request,post_pk,commet_pk):

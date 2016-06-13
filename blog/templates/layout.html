@@ -1,13 +1,22 @@
+{% load bootstrap3 %}
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang ="ko">
+  <head>
     <title>{% block page_title %}내 블로그{% endblock %}</title>
-</head>
 
-<body>
+    <!--반응형으로 표현할때 필요(디바이스별)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block body %}{% endblock %}
 
-</body>
 
+    <!-- 자바스크립트 부분 위에 jquery 위치 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+
+    {% bootstrap_css%}
+    {% bootstrap_javascript %}
+  </head>
+  <body class ="container">
+    {% block body %}{% endblock %}
+   </body>
 </html>
