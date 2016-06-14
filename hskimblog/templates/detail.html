@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
+
+{% block title %}블로그 상세보기{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="starter-template">
+            <h3>{{ post.title }} <small>{{ post.regdate }}</small></h3>
+            <p><strong>{{ post.writer }}</strong></p>
+            <p>{{ post.content }}</p>
+        </div>
+        <hr>
+    </div><!-- /.container -->
+
+    <div class="container">
+        <div class="col-lg-12">
+            <form method="POST" action="{% url 'blog:comment' post_id=post.pk  %}" class="form-inline">
+                <input type="hidden" name="page" value="{{ params.page }}">
+                <input type="hidden" name="category" value="{{ params.category }}">
+                {% csrf_token %}
+              <div class="form-group">
+                <strong>코멘트: </strong>
+                <input type="text" class="form-control" name="writer" id="writer" placeholder="작성자">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" name="passwd" id="passwd" placeholder="비밀번호">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="memo" id="memo" placeholder="코멘트">
+              </div>
+              <button type="submit" class="btn btn-default">작성</button>
+            </form>
+        </div>
+        <hr>
+        <div class="clearfix"></div>
+    </div><!-- /.container -->
+
+    <div class="container">
+    {% for comment in comments %}
+        <div class="col-lg-12">
+            <div class="col-sm-6">
+                <strong>{{ comment.writer }}</strong>: {{ comment.memo }}
+            </div>
+            <div class="col-sm-4">
+                <small>
+                    {{ comment.regdate }}
+                    <a href="{% url 'blog:comment_del' post_id=post.pk pk=comment.pk %}?page={{ params.page }}&category={{ params.category }}"><strong>삭제</strong></a>
+                </small>
+            </div>
+        </div>
+        <hr>
+        <div class="clearfix"></div>
+    {% endfor %}
+    </div><!-- /.container -->
+
+    <div class="container text-center">
+        <a class="btn btn-default" href="{% url 'blog:listing' %}?page={{ params.page }}&category={{ params.category }}" role="button">목록보기</a>
+        <a class="btn btn-default" href="{% url 'blog:edit' pk=post.pk %}?page={{ params.page }}&category={{ params.category }}" role="button">편집하기</a>
+        <a class="btn btn-default" href="{% url 'blog:delete' pk=post.pk %}?page={{ params.page }}&category={{ params.category }}" role="button">삭제하기</a>
+    </div><!-- /.container -->
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
+
+{% block title %}블로그 삭제하기{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="starter-template">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="hidden" name="page" value="{{ params.page }}">
+                <input type="hidden" name="category" value="{{ params.category }}">
+              <div class="form-group">
+                <label for="passwd">비밀번호</label>
+                <input type="password" class="form-control" name="passwd" id="passwd" placeholder="passwd">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-default">삭제</button>
+              </div>
+            </form>
+        </div>
+    </div><!-- /.container -->
+
+{% endblock %}
