@@ -63,6 +63,7 @@ def write(request):
         post.content = content
         post.save()
 
+        # 카테고리 지정
         post.fk_category_id.add(Category.objects.get(pk=category))
 
         url = reverse('blog:detail', kwargs={'pk': post.pk})
@@ -88,6 +89,7 @@ def detail(request, pk):
     return render(request, 'detail.html', context)
 
 def edit(request, pk):
+    # 수정할 post 없는 경우 404 처리
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'GET':
@@ -112,6 +114,7 @@ def edit(request, pk):
         title = request.POST.get('title')
         content = request.POST.get('content')
 
+        # 암호 불일치 시 404처리
         if post.passwd != passwd:
             raise Http404("암호가 일치하지 않습니다.")
 
@@ -126,6 +129,7 @@ def delete(request, pk):
     page = request.GET.get('page', 1)
     category = int(request.GET.get('category', 1))
 
+    # 수정할 post 없는 경우 404 처리
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'GET':
@@ -144,6 +148,7 @@ def delete(request, pk):
 
         passwd = request.POST.get('passwd')
 
+        # 암호 불일치 시 404처리
         if post.passwd != passwd:
             raise Http404("암호가 일치하지 않습니다.")
 
@@ -153,6 +158,7 @@ def delete(request, pk):
         return redirect(url +"?page="+ page +"&category="+ category)
 
 def comment(request, post_id):
+    # GET 요청 시 404 처리
     if request.method == 'GET':
         raise Http404("올바르지 않은 접근 입니다.")
 
@@ -179,6 +185,7 @@ def comment_del(request, post_id, pk):
     page = request.GET.get('page', 1)
     category = int(request.GET.get('category', 1))
 
+    # 삭제할 comment 없는 경우 404 처리
     comment = get_object_or_404(Comment, pk=pk)
 
     if request.method == 'GET':
@@ -197,6 +204,7 @@ def comment_del(request, post_id, pk):
 
         passwd = request.POST.get('passwd')
 
+        # 암호 불일치 시 404처리
         if comment.passwd != passwd:
             raise Http404("암호가 일치하지 않습니다.")
 
