@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
+
+{% block title %}블로그 목록{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        {% for list in listing %}
+        <div class="starter-template">
+            <h3><a href="{% url 'blog:detail' pk=list.pk %}?page={{ params.page }}&category={{ params.category }}">{{ list.title }}</a>
+                <small>{{ list.regdate }} ({{ list.comment_count }})</small></h3>
+            <p><strong>{{ list.writer }}</strong></p>
+            <p>{{ list.content }}</p>
+        </div>
+        <hr>
+        {% empty %}
+        <div class="starter-template">
+            <h3>작성된 포스트가 없습니다.</h3>
+        </div>
+        {% endfor %}
+    </div><!-- /.container -->
+
+    <div class="container">
+        <div class="col-lg-12 text-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {% bootstrap_pagination listing %}
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-default" href="{% url 'blog:write' %}?category={{ params.category }}" role="button">새글쓰기</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div><!-- /.container -->
+
+{% endblock %}
