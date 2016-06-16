@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block page_title %} {{ post.title }} - 게시물 목록 {% endblock %}
+{% block page_title %} {{ post.title }} 게시물 목록 {% endblock %}
 {% block body %}
     {% for item in posts %}
         {% include 'part_detail.html' with post=item %}
