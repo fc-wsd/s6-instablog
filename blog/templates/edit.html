@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>게시물 편집</title>
+</head>
+
+<body>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p>
+            <label for="id_title">글 제목</label>
+            <input type="text" name="title" id="id_title" value="" />
+        </p>
+
+        <p>
+            <textarea name="content"></textarea>
+        </p>
+
+        <p>
+            <button type="submit">저장</button>
+        </p>
+    </form>
+
+</body>
+
+</html>
