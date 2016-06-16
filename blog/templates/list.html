@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>게시물 목록</title>
-</head>
-
-<body>
-
-    <h1>블로그 게시물 목록</h1>
-
-    {% for post in posts %}
-    <p>
-        <a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a>
-    </p>
-    {% empty %}
-    <p>
-        게시물이 없습니다.
-    </p>
+{% extends 'layout.html' %}
+{% block page_title %} {{ post.title }} - 게시물 목록 {% endblock %}
+{% block body %}
+    {% for item in posts %}
+        {% include 'part_detail.html' with post=item %}
+        <p>
+            <a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a>
+        </p>
+        {% empty %}
+        <p>
+            게시물이 없습니다.
+        </p>
     {% endfor %}
 
     {% if posts.has_previous %}
@@ -31,9 +25,4 @@
     <p>
         <a href="{% url 'blog:create' %}">새 글 쓰기</a>
     </p>
-
-
-
-</body>
-
-</html>
+{% endblock %}

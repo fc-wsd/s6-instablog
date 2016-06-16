@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>{{ post.title }} - 게시물 보기</title>
-</head>
+{% extends 'layout.html' %}
+{% block page_title %} {{ post.title }} - 게시물 보기 {% endblock %}
+{% block body %}
+    {% include 'part_detail.html' %}
+    <p><a href="{% url 'blog:list' %}">글 목록</a> </p>
+{% endblock %}
 
-<body>
-
-    <h1>{{ post.title }}</h1>
-
-    <div>{{ post.content }}</div>
-
-    <p>
-        <a href="{% url 'blog:list' %}">글 목록</a>
-    </p>
-
-
-</body>
-
-</html>
