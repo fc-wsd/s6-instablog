@@ -62,3 +62,6 @@ docs/_build/
 target/
 
 *.swp
+
+.idea/
+db.sqlite3

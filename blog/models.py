@@ -8,7 +8,7 @@ class Post(models.Model):
         ('prvt', 'Privated', ),
         ('scheduled', '예약', ),
     )
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, default='제목없음')
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
     status = models.CharField(max_length=20, choices=_status,)
@@ -41,3 +41,10 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=100, default='없음')
+
+    def __str__(self):
+        return self.title

@@ -1,0 +1,21 @@
+{% if post %}
+<h3>{{ post.title }} - 수정</h3>
+{% endif %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <p>
+        <label>글 갈래</label>
+        <select name="category">
+            {% for category in categories %}
+                <option value="{{ category.pk }}" {% if post.category.pk == category.pk %}selected{% endif %}> {{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <label>제목</label>
+        <input type="text" name="title" value="{{ post.title }}" />
+    </p>
+    <p><textarea name="content">{{ post.content }}</textarea></p>
+    <p><button type="submit">저장</button></p>
+
+</form>
