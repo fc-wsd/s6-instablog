@@ -1,7 +1,7 @@
     
     <h3><a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a></h3>
 
-    <div>{{ post.content }}</div>
+    <p><div>{{ post.content }}</div></p>
 
     <p>{{ post.created_at }}</p>
-
+    <hr>
