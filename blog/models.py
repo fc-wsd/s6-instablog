@@ -12,6 +12,7 @@ class Post(models.Model):
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
     status = models.CharField(max_length=20, choices=_status,)
+    category = models.ForeignKey('Category')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -41,3 +42,10 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return '{} : {}'.format(self.pk,self.name)

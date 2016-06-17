@@ -8,12 +8,18 @@ from django.core.urlresolvers import reverse
 
 from .models import Post
 from .models import Comment
+from .models import Category
 
 
 def list_posts(request):
+    category_num = request.GET.get('category', 0)
+    if category_num != 0:
+        posts = Post.objects.filter(category_id = category_num)
+    else:
+        posts = Post.objects.all()
+
     per_page = 2
     page = request.GET.get('page', 1)
-    posts = Post.objects.all()
 
     pg = Paginator(posts, per_page)
 
@@ -26,6 +32,7 @@ def list_posts(request):
 
     ctx = {
         'posts': contents,
+        'category' : category_num,
     }
 
     return render(request, 'list.html', ctx)
@@ -48,10 +55,13 @@ def create_post(request):
     elif request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
+        
 
         new_post = Post()
         new_post.title = title
         new_post.content = content
+
+
         new_post.save()
 
         url = reverse('blog:detail', kwargs={'pk': new_post.pk})
@@ -72,4 +82,10 @@ def create_comment(request,pk):
         url = reverse('blog:detail', kwargs={'pk': post.pk})
         return redirect(url)
 
-def delete_comment(request,post_pk,commet_pk):
+def delete_comment(request,pk):
+    comment = Comment.objects.get(pk=pk)
+    post_pk = comment.post_id
+    comment.delete()
+
+    url = reverse('blog:detail', kwargs={'pk': post_pk})
+    return redirect(url)

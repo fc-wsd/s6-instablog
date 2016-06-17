@@ -3,23 +3,38 @@
 {% block body %}
 
     <h1>블로그 게시물 목록</h1>
-
+    <div align = "right"class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    Category
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="?category=0">All</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="?category=1">Test</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="?category=2">Songs</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="?category=3">Games</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="?category=4">Sports</a></li>
+  </ul>
+  </div>
+  <div id ="post_list">
     {% for item in posts %}
         {% include 'part_detail.html' with post=item %}
     {% empty %}
     <p>게시물이 없습니다.</p>
     {% endfor %}
+  </div>
 
+  <div class ="paginator">
     {% if posts.has_previous %}
-    <a href="?page={{ posts.previous_page_number }}">이전 쪽</a>
+    <a href="?category={{category}}&page={{ posts.previous_page_number }}">이전 쪽</a>
     {% endif %}
 
     {{ posts.number }} / {{ posts.paginator.num_pages }}
 
     {% if posts.has_next %}
-    <a href="?page={{ posts.next_page_number }}">다음 쪽</a>
+    <a href="?category={{category}}&page={{ posts.next_page_number }}">다음 쪽</a>
     {% endif %}
-
+  </div>
     <p>
     <a href="{% url 'blog:create_post' %}">새 글 쓰기</a>
     </p>
