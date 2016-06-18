@@ -45,14 +45,14 @@ def detail_post(request, pk):
 
 @login_required
 def create_post(request):
-    if not request.user.is_authenticated():
-        raise Exception('누구세요?')
-
     if request.method == 'POST':
         form = PostForm(data=request.POST)
 
         if form.is_valid() is True:
-            new_post = form.save()
+            new_post = form.save(commit=False)
+            new_post.user = request.user
+            new_post.save()
+
             url = reverse('blog:detail', kwargs={'pk': new_post.pk})
             return redirect(url)
     else:
