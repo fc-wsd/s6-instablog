@@ -35,7 +35,8 @@ def list_posts(request):
 
 
 def detail_post(request, pk):
-    post = Post.objects.get(pk=pk)
+    # post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
 
     ctx = {
         'post': post,

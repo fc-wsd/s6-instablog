@@ -1,7 +1,9 @@
 from django.test import TestCase
+from django.test import Client
 from django.db import transaction
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse
 
 from .models import Post
 
@@ -40,4 +42,18 @@ class PostTest(TestCase):
 
         exists = Post.objects.filter(pk=new_post.pk).exists()
         self.assertTrue(exists)
+
+    def test_client_detail_post(self):
+        c = Client()
+
+        p = Post()
+        p.user = self.u1
+        p.title = 'qqqq'
+        p.content = 'zzzz'
+        p.save()
+
+        url = reverse('blog:detail', kwargs={'pk': p.pk})
+        res = c.get(url)
+
+        self.assertEqual(res.status_code, 200)
 
