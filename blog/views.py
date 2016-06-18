@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
@@ -7,6 +8,7 @@ from django.core.urlresolvers import reverse
 
 
 from .models import Post
+from .forms import PostNormalForm
 
 
 def list_posts(request):
@@ -40,20 +42,21 @@ def detail_post(request, pk):
 
 
 def create_post(request):
-    ctx = {}
-    if request.method == 'GET':
-        return render(request, 'edit.html', ctx)
-    elif request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
+    if request.method == 'POST':
+        form = PostNormalForm(data=request.POST)
 
-        new_post = Post()
-        new_post.title = title
-        new_post.content = content
-        new_post.save()
+        if form.is_valid() is True:
+            new_post = Post()
+            new_post.title = form.cleaned_data['title']
+            new_post.content = form.cleaned_data['content']
+            new_post.save()
 
-        url = reverse('blog:detail', kwargs={'pk': new_post.pk})
-        return redirect(url)
+            url = reverse('blog:detail', kwargs={'pk': new_post.pk})
+            return redirect(url)
+    else:
+        form = PostNormalForm()
+
+    ctx = {'form': form, }
 
     return render(request, 'edit.html', ctx)
 
