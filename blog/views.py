@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 
 
 from .models import Post
+from .forms import PostForm
 from .forms import PostNormalForm
 
 
@@ -43,18 +44,14 @@ def detail_post(request, pk):
 
 def create_post(request):
     if request.method == 'POST':
-        form = PostNormalForm(data=request.POST)
+        form = PostForm(data=request.POST)
 
         if form.is_valid() is True:
-            new_post = Post()
-            new_post.title = form.cleaned_data['title']
-            new_post.content = form.cleaned_data['content']
-            new_post.save()
-
+            new_post = form.save()
             url = reverse('blog:detail', kwargs={'pk': new_post.pk})
             return redirect(url)
     else:
-        form = PostNormalForm()
+        form = PostForm()
 
     ctx = {'form': form, }
 
