@@ -9,7 +9,9 @@ urlpatterns = [
     url(r'^login/$', login,
         name='login_url',
         kwargs={'template_name': 'login.html'}),
-    url(r'^logout/$', logout, name='logout_url'),
+    url(r'^logout/$', logout,
+        name='logout_url',
+        kwargs={'next_page': '/login/'}),
     url(r'^blog/', include('blog.urls')),
     url(r'^admin/', admin.site.urls),
 ]
