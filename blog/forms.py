@@ -9,6 +9,12 @@ class PostNormalForm(forms.Form):
 
 
 class PostForm(forms.ModelForm):
+    def clean(self):
+        cleaned_data = self.cleaned_data
+
+        if '바보' in cleaned_data['title']:
+            self.add_error('title', '제목에서 바보 냄새가 난다')
+
     class Meta:
         model = Post
         fields = ['title', 'content', ]

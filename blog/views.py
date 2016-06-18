@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 
 from .models import Post
@@ -42,7 +43,11 @@ def detail_post(request, pk):
     return render(request, 'detail.html', ctx)
 
 
+@login_required
 def create_post(request):
+    if not request.user.is_authenticated():
+        raise Exception('누구세요?')
+
     if request.method == 'POST':
         form = PostForm(data=request.POST)
 
