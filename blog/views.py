@@ -7,10 +7,15 @@ from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
 from django.core.urlresolvers import reverse
 
+from django.contrib.auth.decorators import login_required
+
 
 from .models import Post
 from .models import Category
 from .models import Comment
+
+from .forms import PostNormalForm
+from .forms import PostForm
 
 
 def list_posts(request):
@@ -55,21 +60,40 @@ def detail_post(request, pk):
         return redirect(url)
 
 
+@login_required
 def create_post(request):
-    ctx = {}
+    # 인증기능구현
+    if not request.user.is_authenticated():
+        raise Exception('누구세요??')
+
+    form = PostForm()
+    ctx = {
+        'form': form,
+    }
     if request.method == 'GET':
         return render(request, 'edit.html', ctx)
     elif request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
+        form = PostForm(request.POST)
 
-        new_post = Post()
-        new_post.title = title
-        new_post.content = content
-        new_post.save()
+        # title = request.POST.get('title')
+        # content = request.POST.get('content')
 
-        url = reverse('blog:detail', kwargs={'pk': new_post.pk})
-        return redirect(url)
+        if form.is_valid() is True:
+            new_post = form.save(commit=False) # False로 해두면 DB에 반영하지는 않지만 생성된 인스턴스 객체는 반환된다
+            new_post.user = request.user # 유저 정보를 가진다
+            new_post.save()
+            # new_post = Post()
+            # new_post.title = form.cleaned_data['title']
+            # new_post.content = form.cleaned_data['content']
+            # new_post.save()
+
+            url = reverse('blog:detail', kwargs={'pk': new_post.pk})
+            return redirect(url)
+
+    else:
+        form = PostForm()
+
+    ctx = {'form': form, }
 
     return render(request, 'edit.html', ctx)
 

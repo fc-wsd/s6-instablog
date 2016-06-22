@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'bootstrap3',
+    'profiles',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -111,3 +112,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
+# default를 정해준다
+LOGIN_REDIRECT_URL = '/blog/posts/create'

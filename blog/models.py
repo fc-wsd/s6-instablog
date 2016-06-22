@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Post(models.Model):
@@ -8,6 +9,9 @@ class Post(models.Model):
         ('prvt', 'Privated', ),
         ('scheduled', '예약', ),
     )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+
     title = models.CharField(max_length=200, default='제목없음')
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
