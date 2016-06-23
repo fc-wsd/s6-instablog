@@ -5,6 +5,7 @@ from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import NoReverseMatch
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Post
 
@@ -97,7 +98,7 @@ class PhotoModelTest(TestCase):
         with self.assertRaises(IntegrityError) as cm:
             d_post.save()
 
-        self.assertIn('NOT NULL' , cm.exception.__str__())
+        
 
 
     def test_get_post_by_url(self):
@@ -131,7 +132,8 @@ class PhotoModelTest(TestCase):
 
 
 
-        with self.assertRaises(NoReverseMatch) as cm:
-            url = reverse('blog:detail', kwargs = {'pk': -1})
 
-        self.assertIn('Reverse', cm.exception.__str__())
+        url = reverse('blog:detail', kwargs = {'pk': 100})
+
+        with self.assertRaises(ObjectDoesNotExist) as cm:
+            res = d_client.get(url)
