@@ -95,10 +95,10 @@ class PhotoModelTest(TestCase):
         d_post.content = 'world'
 
 
-        with self.assertRaises(IntegrityError) as cm:
+        with self.assertRaises(IntegrityError):
             d_post.save()
 
-        
+
 
 
     def test_get_post_by_url(self):
@@ -135,5 +135,5 @@ class PhotoModelTest(TestCase):
 
         url = reverse('blog:detail', kwargs = {'pk': 100})
 
-        with self.assertRaises(ObjectDoesNotExist) as cm:
+        with self.assertRaises(ObjectDoesNotExist):
             res = d_client.get(url)
