@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
-    'bootstrap3'
+    'bootstrap3',
+    'profiles',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -111,3 +112,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
+LOGIN_REDITECT_URL = 'blog/posts/create/'

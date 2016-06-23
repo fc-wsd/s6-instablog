@@ -4,7 +4,11 @@ from django.core.paginator import Paginator
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
+
+from .forms import PostNormalForm
+from .forms import PostForm
 
 from .models import Post
 from .models import Comment
@@ -13,8 +17,12 @@ from .models import Category
 
 def list_posts(request):
     category_num = request.GET.get('category', 0)
+
+
+    posts = Post.objects.all()
     if category_num != 0:
         posts = Post.objects.filter(category_id = category_num)
+
     else:
         posts = Post.objects.all()
 
@@ -47,25 +55,25 @@ def detail_post(request, pk):
     }
     return render(request, 'detail.html', ctx)
 
-
+@login_required
 def create_post(request):
-    ctx = {}
-    if request.method == 'GET':
-        return render(request, 'edit.html', ctx)
-    elif request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        
 
-        new_post = Post()
-        new_post.title = title
-        new_post.content = content
+    if request.method == 'POST':
+        form = PostForm(data = request.POST)
 
+        if form.is_valid() is True: #모든데이터 확인
 
-        new_post.save()
+            new_post = form.save(commit = False)
+            new_post.user = request.user
+            new_post.save()
 
-        url = reverse('blog:detail', kwargs={'pk': new_post.pk})
-        return redirect(url)
+            url = reverse('blog:detail', kwargs={'pk': new_post.pk})
+            return redirect(url)
+    else:
+        form = PostForm()
+    ctx = {
+        'form' : form,
+        }
 
     return render(request, 'edit.html', ctx)
 

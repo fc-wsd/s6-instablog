@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 
 class Post(models.Model):
     _status = (
@@ -8,11 +8,12 @@ class Post(models.Model):
         ('prvt', 'Privated', ),
         ('scheduled', '예약', ),
     )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=200)
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
     status = models.CharField(max_length=20, choices=_status,)
-    category = models.ForeignKey('Category')
+    category = models.ForeignKey('Category', null=True, blank =True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
