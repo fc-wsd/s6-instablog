@@ -9,13 +9,13 @@ class Post(models.Model):
         ('prvt', 'Privated', ),
         ('scheduled', '예약', ),
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=200)
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
     status = models.CharField(max_length=20, choices=_status,)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def __str__(self):
         return self.title
