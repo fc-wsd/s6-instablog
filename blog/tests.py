@@ -129,10 +129,6 @@ class PhotoModelTest(TestCase):
         d_post.content = '좋은아침'
         d_post.save()
 
-
-
-
-
         url = reverse('blog:detail', kwargs = {'pk': 100})
 
         with self.assertRaises(ObjectDoesNotExist):

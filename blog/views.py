@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
@@ -10,12 +12,17 @@ from django.contrib.auth.decorators import login_required
 from .forms import PostNormalForm
 from .forms import PostForm
 
+from instablog.sample_exceptions import HelloWorldError
+
 from .models import Post
 from .models import Comment
 from .models import Category
 
+logger = logging.getLogger('django')
 
 def list_posts(request):
+    #raise  HelloWorldError('문제!!')
+    logger.warning('경고 경고!')
     category_num = request.GET.get('category', 0)
 
 

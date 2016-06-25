@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang ="ko">
   <head>
@@ -12,11 +13,13 @@
     <!-- 자바스크립트 부분 위에 jquery 위치 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
+    <script src="{% static 'hello.js'%}"></script>
 
     {% bootstrap_css%}
     {% bootstrap_javascript %}
   </head>
   <body class ="container">
+    <p>{{request.just_say}}</p>
     {% block body %}{% endblock %}
    </body>
 </html>

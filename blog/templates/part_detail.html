@@ -2,5 +2,7 @@
     <h3><a href="{% url 'blog:detail' pk=post.pk %}">{{ post.title }}</a></h3>
 
     <div>{{ post.content }}</div>
-
+    {% if post.image %}
+    <p><img src="{{post.image.url}}"/></p>
+    {% endif %}
     <p>{{ post.created_at }}</p>
