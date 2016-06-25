@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -17,8 +19,18 @@ from .models import Comment
 from .forms import PostNormalForm
 from .forms import PostForm
 
+from instablog.sample_exceptions import HelloWorldError
+
+logger = logging.getLogger('django')
+
 
 def list_posts(request):
+    logger.warning('경고 !!!')
+
+    # raise HelloWorldError('뭔가 문제가 있다') # 내가 발생시킨 에러 발생 !
+    # exc = HelloWorldError('?')
+    # ecx.data = {'name': 'GB', 'content': 'not EU, }
+
     per_page = 2
     page = request.GET.get('page', 1)
     posts = Post.objects.all()
@@ -41,7 +53,7 @@ def list_posts(request):
 
 def detail_post(request, pk):
     if request.method == 'GET':
-        post = Post.objects.get(pk=pk)
+        post = get_object_or_404(Post, pk=pk)
 
         ctx = {
             'post': post,
@@ -59,7 +71,7 @@ def detail_post(request, pk):
         url = reverse('blog:detail', kwargs={'pk': pk})
         return redirect(url)
 
-
+# 모든 페이지에 로그인이 요구된다면 미들웨어를 사용하는것이 낫다
 @login_required
 def create_post(request):
     # 인증기능구현

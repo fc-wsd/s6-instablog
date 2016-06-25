@@ -58,3 +58,65 @@ class PostTest(TestCase):
         res = c.get(url)
 
         self.assertEqual(res.status_code, 200)
+
+
+class PhotoModelTest(TestCase):
+    def setUp(self):
+        self.u2 = User.objects.create_user(
+            username='jaemin', password='dlawoals',
+        )
+
+    def test_import_post_model(self):
+        Post = None
+        try:
+            from blog.models import Post
+        except ImportError:
+            pass
+
+        self.assertIsNotNone(Post)
+
+    def test_save_post_by_model(self):
+        '''Post 모델을 이용해 데이터를 저장하는 테스트.
+        검증 방법 : 저장한 뒤 모델 매니저로 저장한 데이터를 가져와서 비교
+        '''
+        u2 = User.objects.first()
+        new_post = Post()
+        new_post.user = u2
+        new_post.title = 'test'
+        new_post.content = 'test'
+        new_post.save()
+        self.assertIsNotNone(new_post.pk)
+        exists = Post.objects.filter(pk=new_post.pk).exists()
+        self.assertTrue(exists)
+
+    def test_failed_save_post_by_model(self):
+        '''Post 모델을 이용해 데이터를 저장할 때 실패하는 경우에 대한 테스트
+        '''
+        new_post = Post()
+        new_post.content = 'fail'
+        with transaction.atomic():
+            with self.assertRaises(IntegrityError):
+                new_post.save()
+
+
+    def test_get_post_by_url(self):
+        '''Django Test Client를 이용해 특정 게시물을 보는 url로 접근하는 테스트
+        '''
+        c = Client()
+        p = Post()
+        p.user = self.u2
+        p.title = 'test'
+        p.content = 'test'
+        p.save()
+        url = reverse('blog:detail', kwargs={'pk': p.pk})
+        res = c.get(url)
+        self.assertEqual(res.status_code, 200)
+
+    def test_failed_get_post_by_url(self):
+        '''Django Test Client를 이용해 특정 게시물을 보지 못하고
+        실패하는 경우에 대한 테스트
+        '''
+        c = Client()
+        url = reverse('blog:detail', kwargs={'pk': 100})
+        res = c.get(url)
+        self.assertEqual(res.status_code, 404)
