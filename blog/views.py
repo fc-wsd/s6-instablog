@@ -7,10 +7,10 @@ from django.core.paginator import EmptyPage
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-
 from .models import Post
 from .forms import PostForm
 from .forms import PostNormalForm
+from instablog.sample_exceptions import HelloWorldError
 
 
 def list_posts(request):

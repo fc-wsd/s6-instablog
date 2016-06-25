@@ -13,7 +13,7 @@ SECRET_KEY = '-o$e+sfubna5qtqcy1t!afytfmg#r2$8(y(^65ky35fo))x2&o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'instablog.sample_middlewares.SampleMiddleware',
 ]
 
 ROOT_URLCONF = 'instablog.urls'
@@ -112,6 +113,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'statics'),
+)
+
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
