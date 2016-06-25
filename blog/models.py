@@ -14,6 +14,9 @@ class Post(models.Model):
     content = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True)
     status = models.CharField(max_length=20, choices=_status,)
+    image = models.ImageField(null=True,
+                              blank=True,
+                              upload_to='%Y/%m/%d/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

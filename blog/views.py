@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -13,7 +15,11 @@ from .forms import PostNormalForm
 from instablog.sample_exceptions import HelloWorldError
 
 
+logger = logging.getLogger('django')
+
+
 def list_posts(request):
+    logger.warning('경고 경고!')
     per_page = 2
     page = request.GET.get('page', 1)
     posts = Post.objects.all()
