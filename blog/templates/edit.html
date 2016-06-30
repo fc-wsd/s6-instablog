@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block page_title %} {{ post.title }} 게시물 편집 {% endblock %}
+{% block body %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p>
+            <div class="form-group">
+                <input class="form-control" name="title" type="text" placeholder="글 제목" />
+            </div>
+        </p>
+
+        <p>
+            <textarea name="content" data-provide="markdown" rows="10" placeholder="마크다운으로 작성해주세요."></textarea>
+        </p>
+
+        <p>
+            <div class="text-right">
+                <button type="submit" class="btn">저장</button>
+            </div>
+        </p>
+    </form>
+{% endblock %}

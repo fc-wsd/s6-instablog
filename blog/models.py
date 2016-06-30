@@ -12,7 +12,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     # 공개글 비공개글 설정,
     # 추후 이웃 공개 기능 등이 들어갈 수 있으므로 boolean 이 아닌 enum으로 처리
-    status = models.CharField(max_length=20, choices=_status)
+    status = models.CharField(max_length=20, choices=_status, default='public')
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField('Tag', blank=True)
 
@@ -34,7 +34,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # 항상 값을 넣어준다
     # 공개댓글 비공개댓글 설정,
     # 추후 이웃 공개 기능 등이 들어갈 수 있으므로 boolean 이 아닌 enum으로 처리
-    status = models.CharField(max_length=20, choices=_status)
+    status = models.CharField(max_length=20, choices=_status, default='public')
 
     def __str__(self):
         return '{}: {}'.format(self.pk, self.content)

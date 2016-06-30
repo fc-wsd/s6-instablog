@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block page_title %} {{ post.title }} 게시물 보기 {% endblock %}
+{% block body %}
+    {% include 'part_detail.html' %}
+    <hr />
+
+    <form method="POST" action="{% url 'blog:create_comment' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="input-group">
+                <input type="hidden" name="post_pk" value={{ post.pk }}>
+                <input type="text" class="form-control" name="content" placeholder="댓글을 입력하세요">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">입력</button>
+                </span>
+            </div>
+        </div>
+    </form>
+
+    {% for comment in comments %}
+        <p>
+            <hr />
+            <div name="comment_content" >
+                {{ comment.content }}
+            </div>
+
+            <div name="comment_create_date" >
+                {{ comment.created_at }}
+            </div>
+            <div name="comment_del" >
+                <form method="DELETE" action="{% url 'blog:delete_comment' pk=comment.pk %}">
+                    <p>
+                    <div class="form-group">
+                        <button type="submit" class="btn">삭제</button>
+                    </div>
+                    </p>
+                </form>
+            </div>
+        </p>
+        {% empty %}
+        <hr />
+        <p>
+            댓글이 없습니다.
+        </p>
+    {% endfor %}
+    <hr />
+    <p><a href="{% url 'blog:list' %}">글 목록</a> </p>
+{% endblock %}
+
