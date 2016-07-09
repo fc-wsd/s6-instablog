@@ -73,7 +73,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testDB',
+        'NAME': 'testdb',
         'HOST': 'testdb.ccwq22qn0t9j.ap-northeast-1.rds.amazonaws.com',
         'USER': 'jaemin',
         'PASSWORD': os.environ.get('PYSTAGRAM_DB_PW'),
