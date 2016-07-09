@@ -19,7 +19,7 @@ else:
     env = 'settings'
 
 os.environ.setdefault(
-    "DJANGO_SETTINGS_MODULE", "pystagram.{}".format(env)
+    "DJANGO_SETTINGS_MODULE", "instablog.{}".format(env)
 )
 
 application = get_wsgi_application()
